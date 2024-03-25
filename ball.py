@@ -26,11 +26,22 @@ class Ball:
             self.speed_y = -self.speed_y
     
     def handle_paddle_collision(self):
+        paddle_left_edge_area = [self.paddle.x, self.paddle.x+(self.paddle.width/3)*1]
+        #paddle_center_area = [(self.paddle.x+self.paddle.width/3)*1, self.paddle.x+(self.paddle.width/3)*2]
+        paddle_right_edge_area = [(self.paddle.x+self.paddle.width/3)*2, self.paddle.x+self.paddle.width]
+
         if self.y + self.radius >= self.paddle.y and self.x - self.radius >= self.paddle.x and (self.x + self.radius) <= (self.paddle.x + self.paddle.width):
+            if self.x >= paddle_left_edge_area[0] and self.x <= paddle_left_edge_area[1] -1:  
+                self.speed_x = -(abs(self.speed_x) *1.5)
+            elif self.x >= paddle_right_edge_area[0]+1 and self.x <= paddle_right_edge_area[1]:
+                self.speed_x = abs(self.speed_x) *1.5
+            else:
+                pass
+
             self.speed_y = -self.speed_y
-            self.speed_x *= 1.05
-            self.speed_y *= 1.05
-            self.paddle.speed *= 1.05
+            self.speed_x *= 1.02
+            self.speed_y *= 1.02
+            self.paddle.speed *= 1.02
 
     
     def check_block_collision(self, block: Block):
@@ -52,11 +63,13 @@ class Ball:
     def handle_wall_collision(self):
         for block in self.wall.block_lists:
             if self.check_block_collision(block):
+                block.hits -= 1
                 if self.x > block.x + block.width or self.x < block.x:
                     self.speed_x = -self.speed_x
                 else:
                     self.speed_y = -self.speed_y
-                self.wall.block_lists.remove(block)
+                if block.hits == 0:
+                    self.wall.block_lists.remove(block)
 
     def is_out(self):
         if self.y - self.radius > SCREEN_HEIGHT:

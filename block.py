@@ -1,5 +1,6 @@
 from constant import *
 from utils import draw_rect_outline
+from random import randint
 
 class Block:
     def __init__(self, x, y, width, height):
@@ -7,10 +8,11 @@ class Block:
         self.y = y
         self.width = width
         self.height = height
-        self.color = PINK
+        self.hits = randint(1, 2)
     
     def draw(self, screen):
-        draw_rect_outline(screen, self.color, self.x, self.y, self.width, self.height)
+        color = PINK if self.hits == 1 else GRAY
+        draw_rect_outline(screen, color, self.x, self.y, self.width, self.height)
 
 class Wall:
     def __init__(self):
