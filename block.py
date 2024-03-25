@@ -15,29 +15,40 @@ class Block:
 class Wall:
     def __init__(self):
         #create wall of blocks
-        blocks_per_line = 10
+        self.blocks_per_line = 10
         lines = 8
-        block_width = SCREEN_WIDTH/blocks_per_line
-        block_height = 30
+        self.block_width = SCREEN_WIDTH/self.blocks_per_line
+        self.block_height = 30
 
-        self.block_list = []
+        self.block_lists = []
         x = 0
         y = 0
 
         for i in range(lines):
-            for j in range(blocks_per_line+1):
-                block = Block(x, y, block_width, block_height)
-                self.block_list.append(block)
-                x += block_width
+            for j in range(self.blocks_per_line+1):
+                block = Block(x, y, self.block_width, self.block_height)
+                self.block_lists.append(block)
+                x += self.block_width
             x = 0
-            y += block_height
-        
+            y += self.block_height
+    
+    def add_row(self):
+        #change the y position of all the existed blocks (y+=self.block_height)
+        for block in self.block_lists:
+            block.y += self.block_height
+        #add new row of wall by insert blocks*(self.blocks_per_line) at the first row
+            x = 0
+            y = 0
+        for i in range(self.blocks_per_line):
+            block = Block(x, y, self.block_width, self.block_height)
+            self.block_lists.insert(i, block)
+            x += self.block_width        
         
     def draw(self, screen):
-        for block in self.block_list:
+        for block in self.block_lists:
             block.draw(screen)
 
-            
+    
 
 
 

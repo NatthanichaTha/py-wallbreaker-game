@@ -50,13 +50,13 @@ class Ball:
         return True
 
     def handle_wall_collision(self):
-        for block in self.wall.block_list:
+        for block in self.wall.block_lists:
             if self.check_block_collision(block):
                 if self.x > block.x + block.width or self.x < block.x:
                     self.speed_x = -self.speed_x
                 else:
                     self.speed_y = -self.speed_y
-                self.wall.block_list.remove(block)
+                self.wall.block_lists.remove(block)
 
     def is_out(self):
         if self.y - self.radius > SCREEN_HEIGHT:

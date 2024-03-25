@@ -12,6 +12,10 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("PyWallBreaker")
 
+        #set timer to every 30 secends
+        self.TIMER_EVENT = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.TIMER_EVENT, 30000)
+
         # Fill background
         self.background = pygame.Surface(self.screen.get_size())
         self.background = self.background.convert()
@@ -36,6 +40,7 @@ class Game:
         if pygame.key.get_pressed()[pygame.K_SPACE]:
             self.state = "game"
             self.ball.set_speed()
+            self.paddle.speed = 5
 
     def game_state(self):
         self.paddle.move()
@@ -49,6 +54,8 @@ class Game:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     return
+                elif event.type == self.TIMER_EVENT:
+                    self.wall.add_row()
 
             #move the paddle (update the position of the paddle)
             if self.state == "init": 
