@@ -3,7 +3,7 @@ from pygame.locals import *
 from constant import *
 from ball import Ball
 from paddle import Paddle
-from block import Block, Wall
+from block import Wall
 
 class Game:
     def __init__(self):      

@@ -42,7 +42,6 @@ class Ball:
             self.speed_x *= 1.02
             self.speed_y *= 1.02
             self.paddle.speed *= 1.02
-
     
     def check_block_collision(self, block: Block):
         #False if the ball is above the block
